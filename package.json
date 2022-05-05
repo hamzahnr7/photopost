@@ -5,6 +5,12 @@
   "author": "Detteksie Smantie <detteksie7@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "yarn --cwd ./server start",
+    "start:prod": "yarn --cwd ./server start:prod",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "yarn --cwd ./server build",
+    "build:client": "yarn --cwd ./client build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd ./client install && yarn build",
     "prepare": "husky install"
   },
   "dependencies": {},

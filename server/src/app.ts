@@ -11,9 +11,16 @@ app.use(e.json());
 app.use(e.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
-app.use(e.static(path.join(__dirname, '..', 'public')));
+if (app.get('env') !== 'production') app.use(e.static(path.join(__dirname, '..', 'public')));
+if (app.get('env') === 'production')
+  app.use(e.static(path.join(__dirname, '..', '..', 'client', 'build')));
 
 app.use('/', router);
+
+if (app.get('env') === 'production')
+  app.get('*', (req, res) => {
+    return res.sendFile(path.join(__dirname, '..', '..', 'client', 'build', 'index.html'));
+  });
 
 // catch 404 and forward to error handler
 app.use(async (req, res, next) => {
