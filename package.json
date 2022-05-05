@@ -1,0 +1,22 @@
+{
+  "name": "photopost",
+  "version": "0.1.0",
+  "description": "Post your photos",
+  "author": "Detteksie Smantie <detteksie7@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2"
+  },
+  "repository": "https://github.com/detteksie/photopost.git",
+  "bugs": "https://github.com/detteksie/photopost/issues",
+  "homepage": "https://github.com/detteksie/photopost#readme",
+  "lint-staged": {
+    "*.{md,html,css,scss,json,js,jsx,ts,tsx}": "prettier -w"
+  }
+}
