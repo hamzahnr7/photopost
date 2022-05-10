@@ -15,6 +15,18 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        field: 'created_at',
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        field: 'updated_at',
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -33,18 +45,6 @@ module.exports = {
       },
       birthdate: {
         type: Sequelize.DATE,
-      },
-      createdAt: {
-        type: Sequelize.DATE,
-        field: 'created_at',
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        field: 'updated_at',
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
       },
     });
   },
