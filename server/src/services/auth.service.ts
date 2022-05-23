@@ -12,16 +12,11 @@ export class AuthService {
   async findEmail(email: string) {
     const user = await this.database.User.findOne({ where: { email } });
     if (user) throw createHttpError(409, 'Email already exist');
+    return user;
   }
 
   async register(registerUserDTO: RegisterUserDTO): Promise<RegisterUserResponse> {
-    const user = {
-      id: 1,
-      email: 'lorem.ipsum@example.com',
-      name: 'Lorem Ipsum',
-      password: 'hesoyam',
-      birthdate: null,
-    };
+    const user = await  this.database.User.create({...registerUserDTO});
     return user;
   }
 
