@@ -1,6 +1,5 @@
 import createHttpError from 'http-errors';
 import { LoginUserDTO, RegisterUserDTO, RegisterUserResponse } from '../dtos/auth.dto';
-// import {  } from 'bcrypt';
 import { db } from '../models';
 import { comparePassword } from '../utils/bcrypt.helper';
 import { createToken } from '../utils/jwt.helper';
