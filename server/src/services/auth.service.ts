@@ -1,6 +1,9 @@
 import createHttpError from 'http-errors';
 import { LoginUserDTO, RegisterUserDTO, RegisterUserResponse } from '../dtos/auth.dto';
+// import {  } from 'bcrypt';
 import { db } from '../models';
+import { comparePassword } from '../utils/bcrypt.helper';
+import { createToken } from '../utils/jwt.helper';
 
 export class AuthService {
   constructor(private readonly database: typeof db) {}
@@ -12,17 +15,23 @@ export class AuthService {
   async findEmail(email: string) {
     const user = await this.database.User.findOne({ where: { email } });
     if (user) throw createHttpError(409, 'Email already exist');
-    return user;
   }
 
   async register(registerUserDTO: RegisterUserDTO): Promise<RegisterUserResponse> {
-    const user = await  this.database.User.create({...registerUserDTO});
+    await this.findEmail(registerUserDTO.email);
+    const user = await this.database.User.create({...registerUserDTO});
     return user;
   }
 
   async login(loginDTO: LoginUserDTO) {
-    const token = Math.random().toString().slice(2);
-    return token;
+    const {email, password} = loginDTO;
+    const authUser = await this.database.User.findOne({where:{email}, attributes: {include: ['password']}});
+    if (!authUser) throw this.loginError();
+    const passMatch = await comparePassword(password, authUser.password);
+    if (!passMatch) throw this.loginError();
+
+    const accesToken = createToken(authUser);
+    return accesToken.toString();
   }
 }
 
